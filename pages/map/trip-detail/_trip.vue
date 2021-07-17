@@ -106,6 +106,10 @@
     },
 
     mounted() {
+
+    },
+
+    created() {
       // https://firebase.google.com/docs/reference/js/firebase.database.Reference#key
       var that = this;
       var rootRef = firebase.database().ref("trips/"+this.$route.params.trip+"/");
@@ -114,30 +118,27 @@
           let locations_friends = Object.entries(snapshot.val());
           console.log("abc", locations_friends)
           for(var i = 0; i < locations_friends.length; i++) {
-              that.addMarker({
-                lat: locations_friends[i][1].lat,
-                lng: locations_friends[i][1].lng,
-                // address: "điểm chưa xác định",
-                type: 'my_location',
-                date_marker: '2020/01/01',
-                time_start_marker:'Chưa cập nhật',
-                time_end_marker:'Chưa cập nhật',
-                // distance:'0 km',
-                // duration:'0 h',
-                name: locations_friends[i][1].user_name,
-                message: locations_friends[i][1].message ? locations_friends[i][1].message : 'Không có lời nhắn !',
-                avatar: locations_friends[i][1].avatar,
-                user_id: locations_friends[i][1].user_id,
-                my_location: true
-              })
+            that.addMarker({
+              lat: locations_friends[i][1].lat,
+              lng: locations_friends[i][1].lng,
+              // address: "điểm chưa xác định",
+              type: 'my_location',
+              date_marker: '2020/01/01',
+              time_start_marker:'Chưa cập nhật',
+              time_end_marker:'Chưa cập nhật',
+              // distance:'0 km',
+              // duration:'0 h',
+              name: locations_friends[i][1].user_name,
+              message: locations_friends[i][1].message ? locations_friends[i][1].message : 'Không có lời nhắn !',
+              avatar: locations_friends[i][1].avatar,
+              user_id: locations_friends[i][1].user_id,
+              my_location: true
+            })
           }
         }
       }, function (error) {
         console.log("Error: " + error.code);
       });
-    },
-
-    created() {
       this.$store.dispatch('map/clear');
     },
 
@@ -255,23 +256,6 @@
                 lat: position.coords.latitude,
                 lng: position.coords.longitude,
               };
-              // infoWindow.setPosition(pos);
-              // that.addMarker({
-              //   lat: position.coords.latitude,
-              //   lng: position.coords.longitude,
-              //   // address: "điểm chưa xác định",
-              //   type: 'myLocation',
-              //   date_marker: '2020/01/01',
-              //   time_start_marker:'Chưa cập nhật',
-              //   time_end_marker:'Chưa cập nhật',
-              //   // distance:'0 km',
-              //   // duration:'0 h',
-              //   note: "vị trí của bạn",
-
-              //   my_location: true
-              // })
-              // infoWindow.setContent("vị trí của bạn");
-              // infoWindow.open(map);
               let follow = await this.$axios.post("api/trip/firebase", {
                 lat: position.coords.latitude,
                 lng: position.coords.longitude,
