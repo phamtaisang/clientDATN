@@ -46,7 +46,7 @@ export default {
 
     axios: {
         // proxy: true,
-        baseURL: 'http://127.0.0.1:8000'
+        baseURL: 'https://sangpt97.herokuapp.com'
     },
     auth: {
         strategies: {
